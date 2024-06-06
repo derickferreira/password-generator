@@ -1,0 +1,62 @@
+/* /global */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --colour_black: #222;
+  --colour_white: #efefef;
+  --colour_blue: #0fc2c0;
+  --colour_darkBlue: #015958;
+
+  --font_poppins: "Poppins", "sans-serif";
+  --font_rubik: "Rubik", "sans-serif";
+}
+
+.hidden {
+  display: none;
+}
+
+body,
+html {
+  cursor: none;
+  min-height: 100vh;
+}
+
+.cursor_dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.cursor_dot::before,
+.cursor_dot::after {
+  content: "";
+  position: absolute;
+  background-color: #000;
+}
+
+.cursor_dot::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.cursor_dot::after {
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+/* global/ */
