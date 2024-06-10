@@ -38,10 +38,34 @@ const generatePassword: (
   getNumber: CharGenerator,
   getSymbol: CharGenerator
 ): void => {
-  let password = "";
+  let password: string = "";
   const passwordLenght: number = inputLength ? parseInt(inputLength.value) : 0;
 
   let generators: CharGenerator[] = [];
+
+  if (inputLetter?.checked) {
+    generators.push(getLetterLowerCase, getLetterUpperCase);
+  }
+  if (inputNumber?.checked) {
+    generators.push(getNumber);
+  }
+
+  if (inputSymbol?.checked) {
+    generators.push(getSymbol);
+  }
+
+  if (passwordLenght === 0) return;
+
+  for (let i: number = 0; i < passwordLenght; i = i + generators.length) {
+    generators.forEach((): void => {
+      const randomValue =
+        generators[Math.floor(Math.random() * generators.length)]();
+
+      password += randomValue;
+    });
+  }
+
+  password = password.slice(0, passwordLenght);
 };
 
 // events
