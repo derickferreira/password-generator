@@ -5,6 +5,13 @@ type CharGenerator = () => string;
 const cursorDot: HTMLDivElement | null =
   document.querySelector("[data-cursor-dot]");
 
+let timeOutId = 0;
+
+const errorContainer: HTMLDivElement | null =
+  document.querySelector("#error_container");
+
+const errorText: HTMLSpanElement | null = document.querySelector("#error");
+
 const inputLength: HTMLInputElement | null = document.querySelector("#length");
 const inputLetter: HTMLInputElement | null = document.querySelector("#letter");
 const inputNumber: HTMLInputElement | null = document.querySelector("#number");
@@ -53,7 +60,15 @@ const generatePassword: (
   const passwordLenght: number = inputLength ? parseInt(inputLength.value) : 0;
 
   if (isNaN(passwordLenght) || passwordLenght <= 0) {
-    console.error("Invalid password length");
+    if (errorText && generateBtn) {
+      errorText.innerText =
+        "Please enter a value equal to or greater than one to generate a password";
+      generateBtn.innerText = "generate password";
+    }
+    errorContainer?.classList.remove("hide");
+    timeOutId = setTimeout(() => {
+      errorContainer?.classList.add("hide");
+    }, 3000);
     return;
   }
 
@@ -70,12 +85,32 @@ const generatePassword: (
     generators.push(getSymbol);
   }
 
-  if (passwordLenght === 0) {
-    console.error("No character types selected");
+  if (generators.length === 0) {
+    if (errorText && generateBtn) {
+      errorText.innerText =
+        "Please select at least one checkbox to include a character type.";
+      generateBtn.innerText = "generate password";
+    }
+    errorContainer?.classList.remove("hide");
+    timeOutId = setTimeout(() => {
+      errorContainer?.classList.add("hide");
+    }, 2000);
     return;
   }
 
-  console.log("before loop");
+  if (passwordLenght >= 120) {
+    if (errorText && generateBtn) {
+      errorText.innerText =
+        "Please select a number less than 120 characters. If you wish to have a password longer than 120 characters, you can generate passwords and concatenate them.";
+      generateBtn.innerText = "generate password";
+    }
+    errorContainer?.classList.remove("hide");
+    timeOutId = setTimeout(() => {
+      errorContainer?.classList.add("hide");
+    }, 10000);
+    return;
+  }
+
   for (let i: number = 0; i < passwordLenght; i = i + generators.length) {
     generators.forEach(() => {
       const randomValue =
@@ -85,13 +120,12 @@ const generatePassword: (
     });
   }
 
-  console.log("after loop");
-
   password = password.slice(0, passwordLenght);
 
-  if (generatedContainer && generatedPassword) {
+  if (generatedContainer && generatedPassword && generateBtn) {
     generatedContainer.classList.remove("hide");
     generatedPassword.innerText = password;
+    generateBtn.innerText = "generate another password";
   }
 };
 
@@ -114,4 +148,18 @@ generateBtn?.addEventListener("click", (event: Event) => {
     getNumber,
     getSymbol
   );
+});
+
+copyBtn?.addEventListener("click", () => {
+  const password = generatedContainer?.querySelector("h4")?.innerText;
+
+  if (password) {
+    navigator.clipboard.writeText(password).then(() => {
+      copyBtn.innerText = "copied password";
+    });
+  }
+
+  setTimeout(() => {
+    copyBtn.innerText = "copy password";
+  }, 1000);
 });

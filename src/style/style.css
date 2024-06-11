@@ -31,6 +31,7 @@ html {
   background-color: var(--colour_Whiteblue);
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .cursor_dot {
@@ -77,7 +78,8 @@ body,
 .container,
 #generate_options,
 #generate_options .form_control,
-#generated_password_container {
+#generated_password_container,
+#error_container {
   display: flex;
 }
 
@@ -95,8 +97,32 @@ label {
 }
 /* global/ */
 
+/* /error */
+#error_container {
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  background-color: var(--colour_white);
+  padding: 0.5rem 1rem;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 10px;
+}
+
+#error_container i {
+  color: red;
+}
+
+#error {
+  color: var(--colour_purple);
+  font-family: var(--font_poppins);
+}
+
+/* error/ */
+
 /* /container */
 .container {
+  max-height: 45rem;
   background-color: var(--colour_white);
   border-radius: 10px;
   flex-direction: column;
@@ -134,7 +160,7 @@ label {
   border-radius: 5px;
   font-family: var(--font_rubik);
   font-weight: 500;
-  width: 2rem;
+  width: 3.1rem;
   text-align: center;
 }
 
@@ -143,7 +169,7 @@ label {
   width: 30%;
 }
 
-/* input[type="checkbox"] {
+input[type="checkbox"] {
   appearance: none;
   width: 20px;
   height: 20px;
@@ -153,7 +179,7 @@ label {
 }
 
 input[type="checkbox"]:checked::before {
-  content: "\2714"; Unicode para o ícone de check
+  content: "\2714"; /*Unicode para o ícone de check*/
   font-size: 18px;
   color: var(--colour_white);
   position: absolute;
@@ -164,7 +190,7 @@ input[type="checkbox"]:checked::before {
   background-color: var(--colour_lightBlue);
   text-align: center;
   line-height: 20px;
-} */
+}
 
 /* /generated password */
 #generated_password_container {
@@ -176,6 +202,20 @@ input[type="checkbox"]:checked::before {
     rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
   border-radius: 10px;
   padding: 0.2rem;
+  max-width: 25rem;
+  height: 65%;
+}
+
+#generated_password_container p {
+  font-size: 0.7rem;
+  max-height: 45%;
+  width: 200px;
+}
+
+#generated_password_container h4 {
+  text-align: center;
+  width: 50%;
+  word-wrap: break-word;
 }
 
 /* generated password/ */

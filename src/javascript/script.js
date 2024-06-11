@@ -1,6 +1,9 @@
 "use strict";
 // select elements
 const cursorDot = document.querySelector("[data-cursor-dot]");
+let timeOutId = 0;
+const errorContainer = document.querySelector("#error_container");
+const errorText = document.querySelector("#error");
 const inputLength = document.querySelector("#length");
 const inputLetter = document.querySelector("#letter");
 const inputNumber = document.querySelector("#number");
@@ -26,7 +29,15 @@ const generatePassword = (getLetterLowerCase, getLetterUpperCase, getNumber, get
     let password = "";
     const passwordLenght = inputLength ? parseInt(inputLength.value) : 0;
     if (isNaN(passwordLenght) || passwordLenght <= 0) {
-        console.error("Invalid password length");
+        if (errorText && generateBtn) {
+            errorText.innerText =
+                "Please enter a value equal to or greater than one to generate a password";
+            generateBtn.innerText = "generate password";
+        }
+        errorContainer === null || errorContainer === void 0 ? void 0 : errorContainer.classList.remove("hide");
+        timeOutId = setTimeout(() => {
+            errorContainer === null || errorContainer === void 0 ? void 0 : errorContainer.classList.add("hide");
+        }, 3000);
         return;
     }
     let generators = [];
@@ -39,22 +50,41 @@ const generatePassword = (getLetterLowerCase, getLetterUpperCase, getNumber, get
     if (inputSymbol === null || inputSymbol === void 0 ? void 0 : inputSymbol.checked) {
         generators.push(getSymbol);
     }
-    if (passwordLenght === 0) {
-        console.error("No character types selected");
+    if (generators.length === 0) {
+        if (errorText && generateBtn) {
+            errorText.innerText =
+                "Please select at least one checkbox to include a character type.";
+            generateBtn.innerText = "generate password";
+        }
+        errorContainer === null || errorContainer === void 0 ? void 0 : errorContainer.classList.remove("hide");
+        timeOutId = setTimeout(() => {
+            errorContainer === null || errorContainer === void 0 ? void 0 : errorContainer.classList.add("hide");
+        }, 2000);
         return;
     }
-    console.log("before loop");
+    if (passwordLenght >= 120) {
+        if (errorText && generateBtn) {
+            errorText.innerText =
+                "Please select a number less than 120 characters. If you wish to have a password longer than 120 characters, you can generate passwords and concatenate them.";
+            generateBtn.innerText = "generate password";
+        }
+        errorContainer === null || errorContainer === void 0 ? void 0 : errorContainer.classList.remove("hide");
+        timeOutId = setTimeout(() => {
+            errorContainer === null || errorContainer === void 0 ? void 0 : errorContainer.classList.add("hide");
+        }, 10000);
+        return;
+    }
     for (let i = 0; i < passwordLenght; i = i + generators.length) {
         generators.forEach(() => {
             const randomValue = generators[Math.floor(Math.random() * generators.length)]();
             password += randomValue;
         });
     }
-    console.log("after loop");
     password = password.slice(0, passwordLenght);
-    if (generatedContainer && generatedPassword) {
+    if (generatedContainer && generatedPassword && generateBtn) {
         generatedContainer.classList.remove("hide");
         generatedPassword.innerText = password;
+        generateBtn.innerText = "generate another password";
     }
 };
 // events
@@ -69,4 +99,16 @@ window.addEventListener("mousemove", (event) => {
 generateBtn === null || generateBtn === void 0 ? void 0 : generateBtn.addEventListener("click", (event) => {
     event.preventDefault();
     generatePassword(getLetterLowerCase, getLetterUpperCase, getNumber, getSymbol);
+});
+copyBtn === null || copyBtn === void 0 ? void 0 : copyBtn.addEventListener("click", () => {
+    var _a;
+    const password = (_a = generatedContainer === null || generatedContainer === void 0 ? void 0 : generatedContainer.querySelector("h4")) === null || _a === void 0 ? void 0 : _a.innerText;
+    if (password) {
+        navigator.clipboard.writeText(password).then(() => {
+            copyBtn.innerText = "copied password";
+        });
+    }
+    setTimeout(() => {
+        copyBtn.innerText = "copy password";
+    }, 1000);
 });
