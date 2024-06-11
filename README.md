@@ -1,42 +1,42 @@
 # Password Generator
 
-## Descrição
+## Description
 
-Este é um gerador de senhas seguro e personalizável, desenvolvido em TypeScript, HTML e CSS. O gerador permite ao usuário especificar o comprimento da senha e a inclusão de letras maiúsculas, letras minúsculas, números e símbolos. O projeto foi criado com foco em segurança e boas práticas de programação.
+This is a secure and customisable password generator, developed in TypeScript, HTML, and CSS. The generator allows the user to specify the length of the password and the inclusion of uppercase letters, lowercase letters, numbers, and symbols. The project was created with a focus on security and best programming practices.
 
-## Funcionalidades
+## Features
 
-- **Geração de senhas seguras:** Cria senhas aleatórias com alta entropia.
-- **Personalização:** Permite escolher o comprimento da senha e incluir letras maiúsculas, minúsculas, números e símbolos.
-- **Interface amigável:** Fácil de usar, com botões para gerar e copiar a senha.
-- **Responsivo:** Interface ajustável para diferentes tamanhos de tela.
+- **Secure Password Generation:** Creates random passwords with high entropy.
+- **Customisation:** Allows choosing the length of the password and includes uppercase letters, lowercase letters, numbers, and symbols.
+- **User-Friendly Interface:** Easy to use, with buttons to generate and copy the password.
+- **Responsive Design:** Adjustable interface for different screen sizes.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
-- **TypeScript:** Linguagem de programação com tipagem estática que melhora a qualidade do código.
-- **HTML:** Estrutura básica da aplicação web.
-- **CSS:** Estilização da interface do usuário.
-- **JavaScript:** Adiciona interatividade à aplicação.
+- **TypeScript:** A statically typed programming language that enhances code quality.
+- **HTML:** Basic structure of the web application.
+- **CSS:** Styling for the user interface.
+- **JavaScript:** Adds interactivity to the application.
 
-## Como Usar
+## How to Use
 
-1. **Clone o repositório:**
-   ```sh
-   git clone https://github.com/seu-usuario/password_generator.git
-   ```
-2. **Instale as dependências:**
-   ```sh
-   cd password_generator
-   npm install
-   ```
-3. **Execute a aplicação:**
-   ```sh
-   npm start
-   ```
-4. **Acesse a aplicação no navegador:**
-   Abra o navegador e vá para `http://localhost:3000`.
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/your-username/password_generator.git
+    ```
+2. **Install TypeScript:**
+    ```sh
+    npm install -g typescript
+    ```
+3. **Run the application:**
+    ```sh
+    npx tsc
+    npx serve
+    ```
+4. **Access the application in the browser:**
+    Open your browser and go to `http://localhost:3000`.
 
-## Estrutura do Projeto
+## Project Structure
 
 ```plaintext
 password_generator/
@@ -54,4 +54,3 @@ password_generator/
 ├── package.json
 ├── package-lock.json
 └── README.md
-```
