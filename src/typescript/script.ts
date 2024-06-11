@@ -10,13 +10,24 @@ const inputLetter: HTMLInputElement | null = document.querySelector("#letter");
 const inputNumber: HTMLInputElement | null = document.querySelector("#number");
 const inputSymbol: HTMLInputElement | null = document.querySelector("#symbol");
 
+const generatedContainer: HTMLDivElement | null = document.querySelector(
+  "#generated_password_container"
+);
+const generatedPassword: HTMLHeadElement | null = document.querySelector(
+  "#generated_password_container h4"
+);
+
+const generateBtn: HTMLButtonElement | null =
+  document.querySelector("#generate");
+const copyBtn: HTMLButtonElement | null = document.querySelector("#copy_btn");
+
 // functions
 const getLetterLowerCase: CharGenerator = (): string => {
   return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
 };
 
 const getLetterUpperCase: CharGenerator = (): string => {
-  return String.fromCharCode(Math.floor(Math.random()));
+  return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
 };
 
 const getNumber: CharGenerator = (): string => {
@@ -28,7 +39,7 @@ const getSymbol: CharGenerator = (): string => {
 };
 
 const generatePassword: (
-  getetterLowerCase: CharGenerator,
+  gettterLowerCase: CharGenerator,
   getLetterUpperCase: CharGenerator,
   getNumber: CharGenerator,
   getSymbol: CharGenerator
@@ -40,6 +51,11 @@ const generatePassword: (
 ): void => {
   let password: string = "";
   const passwordLenght: number = inputLength ? parseInt(inputLength.value) : 0;
+
+  if (isNaN(passwordLenght) || passwordLenght <= 0) {
+    console.error("Invalid password length");
+    return;
+  }
 
   let generators: CharGenerator[] = [];
 
@@ -54,10 +70,14 @@ const generatePassword: (
     generators.push(getSymbol);
   }
 
-  if (passwordLenght === 0) return;
+  if (passwordLenght === 0) {
+    console.error("No character types selected");
+    return;
+  }
 
+  console.log("before loop");
   for (let i: number = 0; i < passwordLenght; i = i + generators.length) {
-    generators.forEach((): void => {
+    generators.forEach(() => {
       const randomValue =
         generators[Math.floor(Math.random() * generators.length)]();
 
@@ -65,7 +85,14 @@ const generatePassword: (
     });
   }
 
+  console.log("after loop");
+
   password = password.slice(0, passwordLenght);
+
+  if (generatedContainer && generatedPassword) {
+    generatedContainer.classList.remove("hide");
+    generatedPassword.innerText = password;
+  }
 };
 
 // events
@@ -76,4 +103,15 @@ window.addEventListener("mousemove", (event: MouseEvent) => {
     cursorDot.style.left = `${posX}px`;
     cursorDot.style.top = `${posY}px`;
   }
+});
+
+generateBtn?.addEventListener("click", (event: Event) => {
+  event.preventDefault();
+
+  generatePassword(
+    getLetterLowerCase,
+    getLetterUpperCase,
+    getNumber,
+    getSymbol
+  );
 });
