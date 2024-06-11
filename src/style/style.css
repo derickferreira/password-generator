@@ -259,3 +259,22 @@ button {
 /* buttons/ */
 
 /* generator/ */
+
+@media screen and (min-height: 780px) {
+  #error_container {
+    font-size: 0.9rem;
+    right: 0;
+  }
+}
+
+@media screen and (min-height: 680px) {
+  #error_container {
+    font-size: 0.9rem;
+    right: 0;
+    top: 0;
+  }
+
+  .container {
+    margin-top: 1.6rem;
+  }
+}
